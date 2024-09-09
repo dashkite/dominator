@@ -1,15 +1,3 @@
-# TODO maybe generate from Node / Element properties and methods
-
-Wrap =
-
-  property: ( name ) -> ( el ) -> el[ name ]
-
-  nullary: ( name ) -> ( el ) -> do el[ name ]
-
-  unary: ( name ) -> ( a ) -> ( el ) -> el[ name ] a
-
-  binary: ( name ) -> ( a, b ) -> ( el ) -> el[ name ] a, b
-
 Attributes =
 
   reducer: ( result, { name, value }) ->
@@ -21,10 +9,14 @@ DOM =
   attributes: ( el ) ->
     Array
       .from el.attributes
-      .reduce reducer, {}
+      .reduce Attributes.reducer, {}
 
-  closest: Wrap.unary "closet"
+  closest: ( selector ) -> ( el ) -> el.closest selector
 
-  target: Wrap.property "target"
+  target: ( el ) -> el.target
+
+  nextSibling: ( el ) -> el.nextSibling
+
+  click: ( el ) -> do el.click
 
 export default DOM

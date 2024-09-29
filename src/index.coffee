@@ -19,4 +19,10 @@ DOM =
 
   click: ( el ) -> do el.click
 
+  slots: ( el ) ->
+    result = {}
+    for el from el.querySelectorAll "[slot]"
+      result[ el.slot ] = el
+    result
+
 export default DOM

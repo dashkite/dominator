@@ -19,6 +19,8 @@ DOM =
 
   click: ( el ) -> do el.click
 
+  focus: ( el ) -> do el.focus
+
   slots: ( el ) ->
     result = {}
     for el from el.querySelectorAll "[slot]"

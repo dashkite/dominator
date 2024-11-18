@@ -13,7 +13,6 @@ DOM =
 
   closest: ( selector ) -> ( el ) -> el.closest selector
 
-  target: ( el ) -> el.target
 
   nextSibling: ( el ) -> el.nextSibling
 
@@ -27,4 +26,6 @@ DOM =
       result[ el.slot ] = el
     result
 
+  target: ( ev ) -> ev.target
+  
 export default DOM

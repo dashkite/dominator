@@ -9,6 +9,9 @@ DOM =
         Array.from el.attributes
           .map ({ name, value }) -> [ name, value ]
 
+  attribute: ( name ) ->
+    ( el ) -> el.getAttribute name
+
   closest: ( selector ) -> ( el ) -> el.closest selector
 
   nextSibling: ( el ) -> el.nextSibling

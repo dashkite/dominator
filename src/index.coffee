@@ -12,6 +12,11 @@ DOM =
   attribute: ( name ) ->
     ( el ) -> el.getAttribute name
 
+  get: DOM.attribute
+
+  set: ( name ) -> ( value ) ->
+    
+
   closest: ( selector ) -> ( el ) -> el.closest selector
 
   nextSibling: ( el ) -> el.nextSibling

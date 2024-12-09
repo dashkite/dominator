@@ -9,13 +9,10 @@ DOM =
         Array.from el.attributes
           .map ({ name, value }) -> [ name, value ]
 
-  attribute: ( name ) ->
+  get: ( name ) ->
     ( el ) -> el.getAttribute name
 
-  get: DOM.attribute
-
   set: ( name ) -> ( value ) ->
-    
 
   closest: ( selector ) -> ( el ) -> el.closest selector
 
@@ -80,5 +77,7 @@ DOM =
   reflect: ( attributes, element ) ->
     for key, value of ( Obj.collapse delimiter: "-", attributes )
       element.setAttribute key, value
+
+DOM.attribute = DOM.get
 
 export default DOM

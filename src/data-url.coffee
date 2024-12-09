@@ -3,7 +3,7 @@ DataURL =
   encode: ( value ) ->
     # TODO add support for other media types
     # for now assume application/json;base64
-    "data:application/json;base64," + btoa JSON.stringify value
+    "data:application/json;base64," + btoa JSON.stringify ( value ? null )
     
   decode: ( url ) ->
     if url?

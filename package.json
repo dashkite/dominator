@@ -20,6 +20,9 @@
   "exports": {
     ".": {
       "browser": "./build/browser/src/index.js"
+    },
+    "./*": {
+      "browser": "./build/browser/src/*.js"
     }
   },
   "main": "build/browser/src/index.js",
@@ -38,5 +41,8 @@
     "@dashkite/genie-clean": "link:../genie-clean",
     "@dashkite/genie-coffee": "link:../genie-coffee",
     "@dashkite/genie-module": "link:../genie-module"
+  },
+  "dependencies": {
+    "@dashkite/joy": "link:../joy"
   }
 }

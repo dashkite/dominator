@@ -2,15 +2,15 @@ import assert from "@dashkite/assert"
 import {test, success} from "@dashkite/amen"
 import print from "@dashkite/amen-console"
 
-# import DataURL from "../src/data-url"
+import $ from "../src"
 
 do ->
 
   print await test "Dominator", [
 
-    # test "DataURL", ->
-    #   console.log DataURL.encode "Hello, world!"
-
+    test "modify", ->
+      assert.equal Function,
+        ( $.modify [ /^data-/ ] ).constructor
 
   ]
 

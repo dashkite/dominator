@@ -1,66 +1,57 @@
-import { Queue } from "@dashkite/joy/iterable"
+import * as Fn from "@dashkite/joy/function"
 import * as Obj from "@dashkite/joy/object"
+import { Queue } from "@dashkite/joy/iterable"
+import Generic from "@dashkite/generic"
 
 DOM =
 
-  attributes: ( el ) ->
+  get: _get = Fn.curry ( name, element ) -> element.getAttribute name
+
+  set: Fn.curry ( name, value, element ) -> element.setAttribute name, value
+
+  attribute: _get
+
+  attributes: ( element ) ->
     Obj.expand delimiter: "-", 
       Object.fromEntries do ->
-        Array.from el.attributes
+        Array
+          .from element.attributes
           .map ({ name, value }) -> [ name, value ]
 
-  get: ( name ) ->
-    ( el ) -> el.getAttribute name
+  reflect: ( attributes, element ) ->
+    for key, value of ( Obj.collapse delimiter: "-", attributes )
+      element.setAttribute key, value
 
-  set: ( name ) -> ( value ) ->
+  modify: do ({ modified } = {}) ->
+    modified = ( records ) ->
+      records.some ({ target, attributeName, oldValue }) ->
+        ( target.getAttribute attributeName ) != oldValue
+    Fn.curry ( attributes, element ) ->
+      do ({ queue, handler, observer } = {}) ->
+        queue = new Queue
+        handler = ( records ) -> 
+          if ( modified records ) then queue.enqueue { element }
+        observer = new MutationObserver handler
+        observer.observe element, 
+          attributes: true
+          attributeFilter: attributes
+        queue
 
-  closest: ( selector ) -> ( el ) -> el.closest selector
-
-  nextSibling: ( el ) -> el.nextSibling
-
-  click: ( el ) -> do el.click
-
-  focus: ( el ) -> do el.focus
-
-  slots: ( el ) ->
+  slots: ( element ) ->
     result = {}
-    for el from el.querySelectorAll "[slot]"
-      result[ el.slot ] = el
+    for element from element.querySelectorAll "[slot]"
+      result[ element.slot ] = element
     result
 
-  target: ( ev ) -> ev.target
+  nextSibling: _next = ( element ) -> element.nextSibling
 
-  # TODO support other cases
-  # modify: do ({ f } = {}) ->
-    
-  #   ( Generic "modify" )
-    
-  #     .define [ Array ], ( attributes ) ->
-  #       ( el ) ->
-  #         queue = new Queue
-  #         handler = ( records, observer ) -> queue.enqueue { records, observer }
-  #         observer = new MutationObserver handler
-  #         observer.observe handle.dom, attributes: true, attributeFilter: attributes
-  #         queue
+  next: _next
 
-  #     .define [ Object ], ( options ) ->
-  #       ( el ) ->
+  closest: ( selector ) -> ( element ) -> element.closest selector
 
-  #     .define [ Array, Object ], ( attributes, options ) ->
-  #       ( el ) ->
-  
-  modify: ( attributes ) ->
-    ( element ) ->
-      queue = new Queue
-      handler = ( records ) -> 
-        modified = records.some ({ target, attributeName, oldValue }) ->
-          ( target.getAttribute attributeName ) != oldValue
-        if modified then queue.enqueue { element }
-      observer = new MutationObserver handler
-      observer.observe element, 
-        attributes: true
-        attributeFilter: attributes
-      queue
+  click: ( element ) -> do element.click
+
+  focus: ( element ) -> do element.focus
 
   # TODO overload to take iterator or element?
   dispatch: ( name ) ->
@@ -73,11 +64,5 @@ DOM =
             cancelable: false
             composed: true
       return
-
-  reflect: ( attributes, element ) ->
-    for key, value of ( Obj.collapse delimiter: "-", attributes )
-      element.setAttribute key, value
-
-DOM.attribute = DOM.get
 
 export default DOM

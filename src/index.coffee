@@ -65,4 +65,26 @@ DOM =
             composed: true
       return
 
+
+
+  activate: do ({ intersects } = {}) ->
+  
+    intersects = ( event ) -> event.isIntersecting
+
+    ( element, handler ) ->
+      do ({ observer } = {}) ->
+        observer = new IntersectionObserver ( events ) ->
+          handler() if ( events.find intersects )?        
+        observer.observe element
+
+  deactivate: do ({ disjoint } = {}) ->
+  
+    disjoint = ( event ) -> event.intersectionRatio <= 0
+
+    observer = new IntersectionObserver ( events ) ->
+      handler() if ( events.find disjoint )?        
+
+    observer.observe element 
+
+
 export default DOM

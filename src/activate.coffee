@@ -10,7 +10,9 @@ activate = do ({ intersects } = {}) ->
 
 deactivate = do ({ disjoint } = {}) ->
 
-  disjoint = ( event ) -> event.intersectionRatio <= 0
+  disjoint = ( event ) -> 
+    console.log intersection: event.intersectionRatio 
+    event.intersectionRatio <= 0
 
   ( element, handler ) ->
     do ({ observer } = {}) ->

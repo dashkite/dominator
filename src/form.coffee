@@ -1,8 +1,8 @@
 # TODO this does not handle form inputs that have multiple values
 
 form = ( root ) ->
-  if ( form = root.querySelector "form" )?
-    Object.fromEntries ( new FormData form )
+  if ( element = root.querySelector "form" )?
+    Object.fromEntries ( new FormData element )
   else {}
 
 reset = ( root ) ->

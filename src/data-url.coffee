@@ -15,4 +15,5 @@ DataURL =
         JSON.parse atob content
       else throw new Error "DataURL: not a data URL"
 
+export { DataURL }
 export default DataURL

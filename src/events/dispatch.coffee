@@ -10,3 +10,5 @@ dispatch = ( name ) ->
           cancelable: false
           composed: true
     return
+
+export { dispatch }

@@ -7,7 +7,7 @@ closest = Fn.curry Fn.binary do ->
 
     .define [ String, Event ], 
       ( selector, { target }) -> 
-        closest target if target?
+        closest selector, target if target?
 
     .define [ String, Element ], 
       ( selector, element ) -> 

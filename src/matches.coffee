@@ -7,7 +7,7 @@ matches = Fn.curry Fn.binary do ->
 
     .define [ String, Event ], 
       ( selector, { target }) -> 
-        matches target if target?
+        matches selector, target if target?
 
     .define [ String, Element ], 
       ( selector, element ) -> 

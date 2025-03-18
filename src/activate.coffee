@@ -1,3 +1,13 @@
+# TODO handle out of order events?
+#
+# We could use a reactor of sorts here to
+# implement a state machine that ensures
+# we never redundantly call activate.
+#
+# See also: experimental activate reactor
+# in Sansa.
+
+
 activate = do ({ intersects } = {}) ->
 
   intersects = ( event ) -> event.isIntersecting

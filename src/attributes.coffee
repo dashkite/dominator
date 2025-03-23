@@ -15,9 +15,16 @@ attributes = ( element ) ->
         .from element.attributes
         .map ({ name, value }) -> [ name, value ]
 
+data = ( element ) ->
+  ( attributes element ).data
+
+dataset = ( element ) -> { element.dataset... }
+
 export { 
   get
   set
   attribute
   attributes 
+  data
+  dataset
 }

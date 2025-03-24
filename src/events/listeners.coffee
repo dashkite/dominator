@@ -9,7 +9,7 @@ Listener =
       listen root, name, ( event ) ->
         if matches selector, event
           intercept event
-          handler event.target  
+          handler event
 
 click = Listener.intercept "click"
 change = Listener.intercept "change"

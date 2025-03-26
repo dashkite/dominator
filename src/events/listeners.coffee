@@ -1,13 +1,13 @@
 import { listen, capture } from "./listen"
 import { intercept, prevent } from "./intercept"
 import { form } from "../form"
-import { matches } from "../matches"
+import { within } from "../within"
 
 Listener =
   intercept: ( name ) ->
     ( root, selector, handler ) ->
       listen root, name, ( event ) ->
-        if matches selector, event
+        if within selector, event
           intercept event
           handler event
 

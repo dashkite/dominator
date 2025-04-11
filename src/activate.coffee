@@ -6,6 +6,9 @@
 #
 # See also: experimental activate reactor
 # in Sansa.
+import * as Fn from "@dashkite/joy/function"
+import Generic from "@dashkite/generic"
+import { $ } from "./select"
 
 
 activate = do ({ intersects } = {}) ->
@@ -13,6 +16,7 @@ activate = do ({ intersects } = {}) ->
   intersects = ( event ) -> event.isIntersecting
 
   ( element, handler ) ->
+    element = $ element
     do ({ observer } = {}) ->
       observer = new IntersectionObserver ( events ) ->
         handler() if ( events.some intersects )  
@@ -24,6 +28,7 @@ deactivate = do ({ disjoint } = {}) ->
     event.intersectionRatio <= 0
 
   ( element, handler ) ->
+    element = $ element
     do ({ observer } = {}) ->
       observer = new IntersectionObserver ( events ) ->
         handler() if ( events.some disjoint )     

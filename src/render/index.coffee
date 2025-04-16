@@ -1,7 +1,15 @@
-import { innerHTML as diff } from "diffhtml"
 import * as Fn from "@dashkite/joy/function"
+import * as Time from "@dashkite/joy/time"
 import Generic from "@dashkite/generic"
-import { $ } from "./select"
+import { $ } from "../select"
+import { diff, patch } from "./diff"
+
+Log =
+  duration: ({ duration }) ->
+    console.log "%cdominator: 
+      DOM updated in
+      #{ duration.toFixed 3 }ms",
+      "color: cyan;"
 
 append = Fn.curry Fn.binary do ->
   
@@ -44,25 +52,42 @@ render = Fn.curry Fn.binary do ->
         render target, html
 
     .define [ Element, String ], ( target, html ) ->
-      await diff target, html
+      target.innerHTML = html
       target
 
     .define [ Element, Element ], ( target, element ) ->
       target.replaceChildren element
       target
 
-    .define [ Element, Array ], ( target, [ rest..., last ] ) ->
-      target.replaceChildren elements..., last
+    .define [ Element, Array ], ( target, elements ) ->
+      target.replaceChildren elements...
       target
       
-    # TODO need to test if this works
-    #      should we add add'l checks?
-    .define [ Element, Object ], ( target, vdom ) ->
-      await diff target, vdom
-      target
+morph = Fn.curry Fn.binary do ->
+
+  ( Generic.make "DOM.morph" )
+  
+    .define [ Node, Node ], ( target, node ) ->
+      Log.duration Time.measure "DOM.morph", ->
+        patch diff target, [ node ]
+      
+    .define [ Node, Array ], ( target, nodes ) ->
+      Log.duration Time.measure "DOM.morph", ->
+        patch diff target, nodes
+
+    .define [( -> true ), String ], ( target, source ) ->
+      morph target,
+        Document
+          .parseHTMLUnsafe source
+          .body
+
+    .define [ String, ( -> true ) ], ( target, html ) ->
+        if ( target = $ target )?
+          morph target, html
 
 export {
   append
   prepend
   render
+  morph
 }

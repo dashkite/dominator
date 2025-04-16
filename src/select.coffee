@@ -10,12 +10,12 @@ select = do ->
     .define [ String ], ( selector ) ->
       document.querySelector selector
 
-    .define [ String, Element ], ( selector, root ) ->
+    .define [ String, Node ], ( selector, root ) ->
       root.querySelector selector
 
-    .define [ Element ], Fn.identity
+    .define [ Node ], Fn.identity
 
-    .define [ Element, Element ], Fn.identity
+    .define [ Node, Node ], Fn.identity
   
 selectAll = do ->
 

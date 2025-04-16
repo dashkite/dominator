@@ -12,10 +12,13 @@ build/browser/src/events/listeners.js: sSAaIulo
 build/browser/src/matches.js: NC9Lh_Dj
 build/browser/src/events/dispatch.js: 5ap93c8X
 build/browser/src/events/intercept.js: Mj9db89G
-build/browser/src/select.js: C5yjhJ0e
+build/browser/src/select.js: aE6uU7kr
 build/browser/src/sibling.js: 4Kz7si8g
 build/browser/src/reflect.js: '-xJCocVx'
 build/browser/src/modify.js: kbpLQ3wr
 build/browser/src/within.js: IqdNJATQ
-build/browser/src/render.js: ZLyrLI15
+build/browser/src/render.js: O8MXk_Iz
 build/browser/src/html.js: 54DpqL40
+build/browser/src/render/morph.js: YXCV0mmj
+build/browser/src/render/index.js: Em6Qa76Q
+build/browser/src/render/diff.js: hcnO7bpk

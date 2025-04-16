@@ -5,9 +5,9 @@ import { $ } from "../select"
 import { diff, patch } from "./diff"
 
 Log =
-  duration: ({ duration }) ->
+  duration: ( action, { duration }) ->
     console.log "%cdominator: 
-      DOM updated in
+      #{ action } in
       #{ duration.toFixed 3 }ms",
       "color: cyan;"
 
@@ -68,19 +68,24 @@ morph = Fn.curry Fn.binary do ->
   ( Generic.make "DOM.morph" )
   
     .define [ Node, Node ], ( target, node ) ->
-      Log.duration Time.measure "DOM.morph", ->
-        patch diff target, [ node ]
+      Log.duration "DOM updated", 
+        Time.measure "DOM.morph", ->
+          patch diff target, [ node ]
       
     .define [ Node, Array ], ( target, nodes ) ->
-      Log.duration Time.measure "DOM.morph", ->
-        patch diff target, nodes
+      Log.duration "DOM updated", 
+        Time.measure "DOM.morph", ->
+          patch diff target, nodes
 
     .define [( -> true ), String ], ( target, source ) ->
-      morph target,
-        Document
-          .parseHTMLUnsafe source
-          .body
-
+      dom = undefined
+      Log.duration "HTML parsed", 
+        Time.measure "html parse", ->
+          dom = Document
+            .parseHTMLUnsafe source
+            .body
+      morph target, dom
+        
     .define [ String, ( -> true ) ], ( target, html ) ->
         if ( target = $ target )?
           morph target, html

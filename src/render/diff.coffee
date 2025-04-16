@@ -1,7 +1,13 @@
 import * as Arr from "@dashkite/joy/array"
 
+Types =
+
+  text: 3
+
 Similarity =
+
   threshold: 5
+
   best: ( future, candidates ) ->
     do ({ diff, winner, min, candidate, score } = {}) ->
       winner = undefined
@@ -21,16 +27,30 @@ Patch =
 
   text: ( node, text ) ->
     name: "text"
-    specificer: { node, text }
+    specifier: { node, text }
     apply: -> node.textContent = text
 
   attribute: ( node, name, value ) -> 
-    name: "attribute"
-    specifier: { node, name, value }
-    apply: -> node.setAttribute name, value
-    
+    if value?
+      name: "attribute"
+      specifier: { node, name, value }
+      apply: -> node.setAttribute name, value
+    else
+      name: "remove attribute"
+      specifier: { node, name }
+      apply: -> node.removeAttribute name
+      
   add: ( node, previous, parent ) -> 
     name: "add"
+    specifier: { node, previous, parent }
+    apply: ->
+      if previous?
+        previous.after node
+      else
+        parent.prepend node
+
+  move: ( node, previous, parent ) -> 
+    name: "move"
     specifier: { node, previous, parent }
     apply: ->
       if previous?
@@ -48,8 +68,8 @@ Patch =
 Diff =
 
   text: ( current, future ) ->
-    changed = ( current.nodeType == 3 ) && 
-      ( future.nodeType == 3 ) &&
+    changed = ( current.nodeType == Types.text ) && 
+      ( future.nodeType == Types.text ) &&
       ( current.textContent != future.textContent )
     if changed
       [ Patch.text current, future.textContent ]
@@ -59,18 +79,22 @@ Diff =
     patches = []
     if current.attributes? && future.attributes?
       for { name, value } from future.attributes
-        changed = ( current.hasAttribute name ) && 
-          (( current.getAttribute name ) != value )
-        if changed 
+        if (( current.getAttribute name ) != value )
           patches.push Patch.attribute current, name, value
+      for { name, value } from current.attributes
+        if !( future.hasAttribute name )
+          patches.push Patch.attribute current, name
     patches
 
   nodes: ( current, future ) ->
-    [
-      ( Diff.text current, future )...
-      ( Diff.attributes current, future )...
-      ( Diff.trees current, future )...
-    ]
+    if future.isEqualNode current
+      []
+    else
+      [
+        ( Diff.text current, future )...
+        ( Diff.attributes current, future )...
+        ( Diff.trees current, future )...
+      ]
 
   trees: ( current, future ) ->
     patches = []
@@ -83,7 +107,7 @@ Diff =
     for f in fx
       if ( c = Similarity.best f, cx )?
         patches = [ patches..., ( Diff.nodes c, f )... ]
-        patches.push Patch.add c, p, current
+        patches.push Patch.move c, p, current
         p = c
         Arr.remove c, cx
       else

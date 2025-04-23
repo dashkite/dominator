@@ -1,40 +1,31 @@
-# TODO handle out of order events?
-#
-# We could use a reactor of sorts here to
-# implement a state machine that ensures
-# we never redundantly call activate.
-#
-# See also: experimental activate reactor
-# in Sansa.
 import * as Fn from "@dashkite/joy/function"
 import Generic from "@dashkite/generic"
 import { $ } from "./select"
 
+show = do ({ intersects } = {}) ->
 
-activate = do ({ intersects } = {}) ->
-
-  intersects = ( event ) -> event.isIntersecting
+  visible = ( event ) -> event.isIntersecting
 
   ( element, handler ) ->
     element = $ element
     do ({ observer } = {}) ->
       observer = new IntersectionObserver ( events ) ->
-        handler() if ( events.some intersects )  
+        handler() if ( events.some visible )  
       observer.observe element
 
-deactivate = do ({ disjoint } = {}) ->
+hide = do ({ disjoint } = {}) ->
 
-  disjoint = ( event ) -> 
+  invisible = ( event ) -> 
     event.intersectionRatio <= 0
 
   ( element, handler ) ->
     element = $ element
     do ({ observer } = {}) ->
       observer = new IntersectionObserver ( events ) ->
-        handler() if ( events.some disjoint )     
+        handler() if ( events.some invisible )     
       observer.observe element
 
 export {
-  activate
-  deactivate
+  show
+  hide
 }

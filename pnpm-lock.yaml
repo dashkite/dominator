@@ -8,6 +8,9 @@ importers:
 
   .:
     dependencies:
+      '@dashkite/flashdom':
+        specifier: link:../flashdom
+        version: link:../flashdom
       '@dashkite/generic':
         specifier: link:../generic
         version: link:../generic

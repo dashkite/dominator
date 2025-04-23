@@ -2,14 +2,7 @@ import * as Fn from "@dashkite/joy/function"
 import * as Time from "@dashkite/joy/time"
 import Generic from "@dashkite/generic"
 import { $ } from "../select"
-import { diff, patch } from "./diff"
-
-Log =
-  duration: ( action, { duration }) ->
-    console.log "%cdominator: 
-      #{ action } in
-      #{ duration.toFixed 3 }ms",
-      "color: cyan;"
+import { flash } from "@dashkite/flashdom"
 
 append = Fn.curry Fn.binary do ->
   
@@ -63,36 +56,9 @@ render = Fn.curry Fn.binary do ->
       target.replaceChildren elements...
       target
       
-morph = Fn.curry Fn.binary do ->
-
-  ( Generic.make "DOM.morph" )
-  
-    .define [ Node, Node ], ( target, node ) ->
-      Log.duration "DOM updated", 
-        Time.measure "DOM.morph", ->
-          patch diff target, [ node ]
-      
-    .define [ Node, Array ], ( target, nodes ) ->
-      Log.duration "DOM updated", 
-        Time.measure "DOM.morph", ->
-          patch diff target, nodes
-
-    .define [( -> true ), String ], ( target, source ) ->
-      dom = undefined
-      Log.duration "HTML parsed", 
-        Time.measure "html parse", ->
-          dom = Document
-            .parseHTMLUnsafe source
-            .body
-      morph target, dom
-        
-    .define [ String, ( -> true ) ], ( target, html ) ->
-        if ( target = $ target )?
-          morph target, html
-
 export {
   append
   prepend
   render
-  morph
+  flash
 }

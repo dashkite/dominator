@@ -1,16 +1,16 @@
 build/browser/src/events/index.js: '-vYndvD5'
-build/browser/src/attributes.js: fx_0gAEc
+build/browser/src/attributes.js: vSo5L-pL
 build/browser/src/slots.js: XkEKxWkj
 build/browser/src/form.js: JbfwaL7j
 build/browser/src/closest.js: GzDnFVHW
 build/browser/src/data-url.js: kB7noUik
-build/browser/src/index.js: s-bzuabM
+build/browser/src/index.js: qQhsyuga
 build/browser/src/activate.js: ybme15CG
 build/browser/src/events/dispatchers.js: W-ZC3bg1
 build/browser/src/events/listen.js: 7nhDPVxT
 build/browser/src/events/listeners.js: sSAaIulo
 build/browser/src/matches.js: NC9Lh_Dj
-build/browser/src/events/dispatch.js: 5ap93c8X
+build/browser/src/events/dispatch.js: kPdCNrRQ
 build/browser/src/events/intercept.js: Mj9db89G
 build/browser/src/select.js: aE6uU7kr
 build/browser/src/sibling.js: 4Kz7si8g
@@ -20,5 +20,6 @@ build/browser/src/within.js: IqdNJATQ
 build/browser/src/render.js: O8MXk_Iz
 build/browser/src/html.js: 54DpqL40
 build/browser/src/render/morph.js: YXCV0mmj
-build/browser/src/render/index.js: aBCIVl7b
+build/browser/src/render/index.js: xmUg_x7M
 build/browser/src/render/diff.js: SbzGGOeL
+build/browser/src/show.js: nhv4HgAI

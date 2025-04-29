@@ -1,4 +1,3 @@
-# TODO overload to take iterator or element?
 dispatch = ( element, name, detail ) ->
   element.dispatchEvent new CustomEvent name,
     detail: detail 

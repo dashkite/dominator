@@ -1,4 +1,3 @@
-# TODO this does not handle form inputs that have multiple values
 
 form = ( root ) ->
   if ( element = root.querySelector "form" )?

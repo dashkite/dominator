@@ -27,7 +27,6 @@ modified = Fn.curry Fn.binary do ->
         attributeFilter: attributes
       queue
 
-# TODO remove once we've migrated other Rio components
 modify = Fn.curry ( attributes, element ) ->
   queue = new Queue
   handler = ( records ) ->

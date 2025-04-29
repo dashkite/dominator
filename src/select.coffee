@@ -1,7 +1,6 @@
 import * as Fn from "@dashkite/joy/function"
 import Generic from "@dashkite/generic"
 
-# TODO convert to arrays?
 
 select = do ->
 

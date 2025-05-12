@@ -1,3 +1,5 @@
+# TODO add to Zest?
+
 slots = ( element ) ->
   result = {}
   for element from element.querySelectorAll "[slot]"

@@ -1,3 +1,7 @@
+# TODO does this belong in Bake?
+# TODO possibly related to reflect (for complex attributes)
+# TODO support for images (most common use case)
+
 DataURL =
 
   encode: ( value ) ->

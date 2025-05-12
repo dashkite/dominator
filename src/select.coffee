@@ -1,7 +1,6 @@
 import * as Fn from "@dashkite/joy/function"
 import Generic from "@dashkite/generic"
 
-
 select = do ->
 
   ( Generic.make "Dominator.select" )
@@ -12,10 +11,6 @@ select = do ->
     .define [ String, Node ], ( selector, root ) ->
       root.querySelector selector
 
-    .define [ Node ], Fn.identity
-
-    .define [ Node, Node ], Fn.identity
-  
 selectAll = do ->
 
   ( Generic.make "Dominator.selectAll" )
@@ -23,17 +18,10 @@ selectAll = do ->
     .define [ String ], ( selector ) ->
       document.querySelectorAll selector
 
-    .define [ String, Element ], ( selector, root ) ->
+    .define [ String, Node ], ( selector, root ) ->
       root.querySelectorAll selector
-
-    .define [ Array, Element ], Fn.identity
-
-$ = select
-$$ = selectAll
 
 export { 
   select
   selectAll
-  $
-  $$
 }

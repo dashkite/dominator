@@ -8,7 +8,7 @@ attribute = get
 set = Fn.curry ( name, value, element ) -> 
   element.setAttribute name, value
 
-attributes = ( element ) ->
+attributes = ( reference ) ->
   Obj.expand delimiter: "-", 
     Object.fromEntries do ->
       Array
@@ -16,7 +16,8 @@ attributes = ( element ) ->
         .map ({ name, value }) -> [ name, value ]
 
 data = ( element ) ->
-  ( attributes element ).data
+  # element = ( $ element ).get()
+  ( attributes element ).dataset
 
 dataset = ( element ) -> { element.dataset... }
 

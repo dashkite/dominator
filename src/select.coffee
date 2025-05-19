@@ -23,5 +23,6 @@ selectAll = do ->
 
 export { 
   select
+  select as $
   selectAll
 }

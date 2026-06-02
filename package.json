@@ -1,6 +1,6 @@
 {
   "name": "@dashkite/dominator",
-  "version": "0.1.31",
+  "version": "0.1.32",
   "description": "Combinators for DOM methods and functions",
   "keywords": [],
   "homepage": "https://github.com/dashkite/dominator#readme",
